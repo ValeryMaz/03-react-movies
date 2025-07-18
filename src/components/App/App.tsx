@@ -7,6 +7,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
 import MovieModal from "../MovieModal/MovieModal";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -39,7 +40,6 @@ function App() {
     } catch {
       setLoader(false);
       setError(true);
-      toast.error("There was an error, please try again.");
     } finally {
       setLoader(false);
     }
@@ -51,6 +51,7 @@ function App() {
       {!error && movies.length > 0 && (
         <MovieGrid movies={movies} onSelect={openModal} />
       )}
+      {error && <ErrorMessage />}
       {isModalOpen && selectedMovie && (
         <MovieModal onClose={closeModal} movie={selectedMovie} />
       )}
